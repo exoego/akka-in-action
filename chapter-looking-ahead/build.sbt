@@ -4,8 +4,6 @@ version := "1.0"
 
 organization := "com.manning"
 
-resolvers ++= Seq("Typesafe Snapshots" at "http://repo.akka.io/snapshots/")
-
 parallelExecution in Test := false
 
 fork := true
