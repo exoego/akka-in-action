@@ -4,9 +4,6 @@ version := "1.0"
 
 organization := "com.manning"
 
-resolvers ++= Seq("Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-                  "Sonatype snapshots"  at "http://oss.sonatype.org/content/repositories/snapshots/")
-
 parallelExecution in Test := false
 
 fork := true
