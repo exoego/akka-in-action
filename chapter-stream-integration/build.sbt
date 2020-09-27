@@ -20,7 +20,7 @@ libraryDependencies ++= {
     "com.lightbend.akka"      %% "akka-stream-alpakka-amqp"          % alpakkaVersion,
     "ch.qos.logback"          %  "logback-classic"                   % "1.1.3",
     "commons-io"              %  "commons-io"                        % "2.0.1"         % "test",
-    "io.arivera.oss"          %  "embedded-rabbitmq"                 % "1.2.1"         % "test",
+    "io.arivera.oss"          %  "embedded-rabbitmq"                 % "1.4.0"         % "test",
     "com.typesafe.akka"       %% "akka-http-testkit"                 % akkaHttpVersion % "test",
     "com.typesafe.akka"       %% "akka-stream-testkit"               % akkaVersion     % "test",
     "com.typesafe.akka"       %% "akka-testkit"                      % akkaVersion     % "test",
