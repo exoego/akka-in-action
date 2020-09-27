@@ -1,17 +1,15 @@
 package aia.integration
 
 import scala.concurrent.Future
-
-import akka.actor.{ ActorSystem , Actor, Props }
+import akka.actor.{ActorSystem, Props}
 import akka.event.Logging
 import akka.util.Timeout
-
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+import com.typesafe.config.{Config, ConfigFactory}
 
-import com.typesafe.config.{ Config, ConfigFactory } 
+import scala.util.{Failure, Success}
 
 object OrderServiceApp extends App
     with RequestTimeout {
@@ -37,8 +35,9 @@ object OrderServiceApp extends App
   val log =  Logging(system.eventStream, "order-service")
   bindingFuture.map { serverBinding =>
     log.info(s"Bound to ${serverBinding.localAddress} ")
-  }.onFailure { 
-    case ex: Exception =>
+  }.onComplete {
+    case Success(_) =>
+    case Failure(ex) =>
       log.error(ex, "Failed to bind to {}:{}!", host, port)
       system.terminate()
   }

@@ -5,10 +5,9 @@ import java.nio.file.Path
 import java.time.ZonedDateTime
 import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
-import akka.NotUsed
 import akka.util.ByteString
 import akka.stream.IOResult
-import akka.stream.scaladsl.{ FileIO, Framing, RunnableGraph, Source, Flow, SubFlow }
+import akka.stream.scaladsl.{ FileIO, Framing, Source, Flow }
 import spray.json._
 
 /**
@@ -120,8 +119,8 @@ object LogStreamProcessor extends EventMarshalling {
             ZonedDateTime.parse(time.trim), 
             desc.trim
           )) 
-        case x => 
-          throw new LogParseException(s"Failed on line: $line")
+        case _ =>
+          throw LogParseException(s"Failed on line: $line")
       }
     } else None
   }

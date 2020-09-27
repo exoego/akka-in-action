@@ -19,14 +19,14 @@ class StateEndpoint extends Actor {
 
 class SystemLog extends Actor {
   def receive = {
-    case event: StateEvent => {
+    case StateEvent => {
     }
   }
 }
 
 class SystemMonitor extends Actor {
   def receive = {
-    case event: StateEvent => {
+    case StateEvent => {
     }
   }
 }

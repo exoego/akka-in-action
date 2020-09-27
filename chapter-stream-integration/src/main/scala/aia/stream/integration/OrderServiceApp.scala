@@ -1,14 +1,10 @@
 package aia.stream.integration
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.ActorSystem
 import akka.event.Logging
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.Http.ServerBinding
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
 import com.typesafe.config.{Config, ConfigFactory}
-
-import scala.concurrent.Future
 
 object OrderServiceApp extends App
     with RequestTimeout {

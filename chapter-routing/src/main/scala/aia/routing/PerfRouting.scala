@@ -75,7 +75,7 @@ class WrongDynamicRouteeSizer(nrActors: Int, props: Props, router: ActorRef) ext
   //restart children
   override def preStart(): Unit = {
     super.preStart()
-    (0 until  nrChildren).map(nr => createRoutee())
+    (0 until  nrChildren).map(_ => createRoutee())
   }
 
   def createRoutee(): Unit = {
@@ -94,13 +94,13 @@ class WrongDynamicRouteeSizer(nrActors: Int, props: Props, router: ActorRef) ext
         })
         router ! GetRoutees
       } else {
-        (nrChildren until size).map(nr => createRoutee())
+        (nrChildren until size).map(_ => createRoutee())
       }
       nrChildren = size
     }
     case routees: Routees => {
-      import collection.JavaConversions._
-      val active = routees.getRoutees.map{
+      import collection.JavaConverters._
+      val active = routees.getRoutees.asScala.map{
         case x: ActorRefRoutee => x.ref.path.toString
         case x: ActorSelectionRoutee => x.selection.pathString
       }
@@ -127,7 +127,7 @@ class DynamicRouteeSizer(nrActors: Int,
   //restart children
   override def preStart(): Unit = {
     super.preStart()
-    (0 until  nrChildren).map(nr => createRoutee())
+    (0 until  nrChildren).map(_ => createRoutee())
   }
 
   def createRoutee(): Unit = {
@@ -148,14 +148,14 @@ class DynamicRouteeSizer(nrActors: Int,
         })
         router ! GetRoutees
       } else {
-        (nrChildren until size).map(nr => createRoutee())
+        (nrChildren until size).map(_ => createRoutee())
       }
       nrChildren = size
     }
     case routees: Routees => {
       //translate Routees into a actorPath
-      import collection.JavaConversions._
-      val active = routees.getRoutees.map{
+      import collection.JavaConverters._
+      val active = routees.getRoutees.asScala.map{
         case x: ActorRefRoutee => x.ref.path.toString
         case x: ActorSelectionRoutee => x.selection.pathString
       }
@@ -176,7 +176,7 @@ class DynamicRouteeSizer(nrActors: Int,
         context.watch(child)
       }
     }
-    case Terminated(child) => router ! GetRoutees
+    case Terminated(_) => router ! GetRoutees
   }
 }
 
@@ -187,7 +187,7 @@ class DynamicRouteeSizer2(nrActors: Int, props: Props, router: ActorRef) extends
   //restart children
   override def preStart(): Unit = {
     super.preStart()
-    (0 until  nrChildren).map(nr => createRoutee())
+    (0 until  nrChildren).map(_ => createRoutee())
   }
 
   def createRoutee(): Unit = {
@@ -209,7 +209,7 @@ class DynamicRouteeSizer2(nrActors: Int, props: Props, router: ActorRef) extends
           context.stop(ref)
         })
       } else {
-        (currentNumber until size).map(nr => createRoutee())
+        (currentNumber until size).map(_ => createRoutee())
       }
       nrChildren = size
     }
@@ -217,7 +217,7 @@ class DynamicRouteeSizer2(nrActors: Int, props: Props, router: ActorRef) extends
 
       println("routees " + routees)
       if(routees.getRoutees.size() < nrChildren) {
-        ( routees.getRoutees.size() until nrChildren).map(nr => createRoutee())
+        ( routees.getRoutees.size() until nrChildren).map(_ => createRoutee())
       }
 
     }

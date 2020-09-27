@@ -1,8 +1,6 @@
 package aia.stream
 
 
-import java.nio.file.{ Path, Paths }
-import java.nio.file.StandardOpenOption
 import java.nio.file.StandardOpenOption._
 import scala.concurrent.Future
 
@@ -12,7 +10,7 @@ import akka.stream.scaladsl.{ FileIO, RunnableGraph, Source, Sink }
 import akka.util.ByteString
 
 
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.{ ConfigFactory }
 
 object StreamingCopy extends App {
   val config = ConfigFactory.load() 

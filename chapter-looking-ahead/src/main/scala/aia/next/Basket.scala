@@ -101,7 +101,7 @@ class Basket extends PersistentActor
     case ItemRemoved(id)         => items = items.removeItem(id)
     case ItemUpdated(id, number) => items = items.updateItem(id, number)
     case Replaced(newItems)      => items = newItems
-    case Cleared(clearedItems) =>
+    case Cleared(_) =>
       items = items.clear
       //basket is cleared after payment.
       saveSnapshot(Basket.Snapshot(items))

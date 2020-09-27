@@ -30,7 +30,7 @@ class Inventory(publisher: ActorRef) extends Actor
   with FSM[State, StateData] {
 
   var reserveId = 0
-  startWith(WaitForRequests, new StateData(0, Seq()))
+  startWith(WaitForRequests, StateData(0, Seq()))
 
   when(WaitForRequests) {
     case Event(request: BookRequest, data: StateData) => {
@@ -69,13 +69,13 @@ class Inventory(publisher: ActorRef) extends Actor
     }
   }
   when(SoldOut) {
-    case Event(request: BookRequest, data: StateData) => {
-      goto(ProcessSoldOut) using new StateData(0, Seq(request))
+    case Event(request: BookRequest, _: StateData) => {
+      goto(ProcessSoldOut) using StateData(0, Seq(request))
     }
   }
   when(ProcessSoldOut) {
-    case Event(Done, data: StateData) => {
-      goto(SoldOut) using new StateData(0, Seq())
+    case Event(Done, _: StateData) => {
+      goto(SoldOut) using StateData(0, Seq())
     }
   }
   whenUnhandled {
@@ -183,13 +183,13 @@ class InventoryWithTimer(publisher: ActorRef) extends Actor
     }
   }
   when(SoldOut) {
-    case Event(request: BookRequest, data: StateData) => {
-      goto(ProcessSoldOut) using new StateData(0, Seq(request))
+    case Event(request: BookRequest, _: StateData) => {
+      goto(ProcessSoldOut) using StateData(0, Seq(request))
     }
   }
   when(ProcessSoldOut) {
-    case Event(Done, data: StateData) => {
-      goto(SoldOut) using new StateData(0, Seq())
+    case Event(Done, _: StateData) => {
+      goto(SoldOut) using StateData(0, Seq())
     }
   }
   whenUnhandled {
