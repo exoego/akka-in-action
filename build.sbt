@@ -14,7 +14,8 @@ lazy val fault       = project.in(file("chapter-fault-tolerance"))
 
 lazy val futures     = project.in(file("chapter-futures"))
 
-lazy val integration = project.in(file("chapter-integration"))
+// sbt process killed ?
+// lazy val integration = project.in(file("chapter-integration"))
 
 lazy val java = project.in(file("chapter-java"))
 

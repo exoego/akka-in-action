@@ -5,8 +5,8 @@ val akkaVersion = "2.5.4"
 
 val project = Project(
   id = "channels",
-  base = file("."),
-  settings = Project.defaultSettings ++ SbtMultiJvm.multiJvmSettings ++ Seq(
+  base = file(".")
+).settings(Defaults.coreDefaultSettings ++ SbtMultiJvm.multiJvmSettings ++ Seq(
     name := "akka-sample-multi-node-scala",
     organization := "manning",
     version := "1.0",
@@ -20,21 +20,26 @@ val project = Project(
     "org.scalatest"     %%  "scalatest"               % "3.0.0"      % "test"
     ),
     // make sure that MultiJvm test are compiled by the default test compilation
-    compile in MultiJvm <<= (compile in MultiJvm) triggeredBy (compile in Test),
+    compile in MultiJvm := ((compile in MultiJvm) triggeredBy (compile in Test)).value,
     // disable parallel tests
     parallelExecution in Test := false,
     // make sure that MultiJvm tests are executed by the default test target,
     // and combine the results from ordinary test and multi-jvm tests
-    executeTests in Test <<= (executeTests in Test, executeTests in MultiJvm) map {
-      case (testResults, multiNodeResults)  =>
-        val overall =
-          if (testResults.overall.id < multiNodeResults.overall.id)
-            multiNodeResults.overall
-          else
-            testResults.overall
-        Tests.Output(overall,
-          testResults.events ++ multiNodeResults.events,
-          testResults.summaries ++ multiNodeResults.summaries)
+    executeTests in Test := {
+      val testResults = (executeTests in Test).value
+      val multiNodeResults = (executeTests in MultiJvm).value
+      val overall = (testResults.overall, multiNodeResults.overall) match {
+        case (_, e @ sbt.TestResult.Error) => e
+        case (e @ sbt.TestResult.Error, o) => e
+        case (_, failed @ sbt.TestResult.Failed) => failed
+        case (failed @ sbt.TestResult.Failed, o) => failed
+        case (_, _) => sbt.TestResult.Passed
+      }
+      Tests.Output(overall,
+        testResults.events ++ multiNodeResults.events,
+        testResults.summaries ++ multiNodeResults.summaries)
     }
   )
-) configs (MultiJvm)
+)
+.enablePlugins(MultiJvmPlugin)
+.configs(MultiJvm)
