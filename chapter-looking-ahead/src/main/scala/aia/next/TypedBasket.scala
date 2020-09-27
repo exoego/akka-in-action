@@ -17,12 +17,12 @@ object TypedBasket {
   case class Item(productId: String, number: Int, unitPrice: BigDecimal)
 
   def basketBehavior(items: Items = Items()): Behavior[Command] =
-    Actor.immutable[Command] { (ctx, msg) =>
+    Actor.immutable[Command] { (_, msg) =>
       msg match {
-        case GetItems(productId, replyTo) =>
+        case GetItems(_, replyTo) =>
           replyTo ! items
           basketBehavior(items)
-        case Add(item, productId) =>
+        case Add(item, _) =>
           basketBehavior(Items(items.list :+ item))
       }
     }

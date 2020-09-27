@@ -1,20 +1,16 @@
 package aia.stream
 
-import java.nio.file.{ Files, FileSystems, Path }
+import java.nio.file.{FileSystems, Files}
+
 import scala.concurrent.Future
-import scala.concurrent.duration._
-
-import akka.NotUsed
-import akka.actor.{ ActorSystem , Actor, Props }
+import akka.actor.ActorSystem
 import akka.event.Logging
-
-import akka.stream.{ ActorMaterializer, ActorMaterializerSettings, Supervision }
-
+import akka.stream.{ActorMaterializer, ActorMaterializerSettings, Supervision}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.http.scaladsl.server.Directives._
+import com.typesafe.config.ConfigFactory
 
-import com.typesafe.config.{ Config, ConfigFactory }
+import scala.util.{Failure, Success}
 
 object LogsApp extends App {
 
@@ -49,8 +45,9 @@ object LogsApp extends App {
   val log =  Logging(system.eventStream, "logs")
   bindingFuture.map { serverBinding =>
     log.info(s"Bound to ${serverBinding.localAddress} ")
-  }.onFailure { 
-    case ex: Exception =>
+  }.onComplete {
+    case Success(_) =>
+    case Failure(ex) =>
       log.error(ex, "Failed to bind to {}:{}!", host, port)
       system.terminate()
   }

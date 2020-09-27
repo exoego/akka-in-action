@@ -14,14 +14,14 @@ trait TicketInfoService extends WebServiceCalls {
   type Recovery[T] = PartialFunction[Throwable,T]
 
   // Noneで回復する
-  def withNone[T]: Recovery[Option[T]] = { case NonFatal(e) => None }
+  def withNone[T]: Recovery[Option[T]] = { case NonFatal(_) => None }
 
   // 空のSequenceで回復する
-  def withEmptySeq[T]: Recovery[Seq[T]] = { case NonFatal(e) => Seq() }
+  def withEmptySeq[T]: Recovery[Seq[T]] = { case NonFatal(_) => Seq() }
 
   // 前のステップのticketInfoで回復する
   def withPrevious(previous: TicketInfo): Recovery[TicketInfo] = {
-    case NonFatal(e) => previous
+    case NonFatal(_) => previous
   }
 
   def getTicketInfo(ticketNr: String, location: Location): Future[TicketInfo] = {

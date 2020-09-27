@@ -1,15 +1,14 @@
 package com.goticks
 
 import scala.concurrent.Future
-
 import akka.actor.ActorSystem
 import akka.event.Logging
-
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.server.Route
-
 import akka.stream.ActorMaterializer
+
+import scala.util.{Failure, Success}
 
 trait Startup extends RequestTimeout {
   def startup(api: Route)(implicit system: ActorSystem) = {
@@ -28,8 +27,9 @@ trait Startup extends RequestTimeout {
     val log = Logging(system.eventStream, "go-ticks")
     bindingFuture.map { serverBinding =>
       log.info(s"RestApi bound to ${serverBinding.localAddress} ")
-    }.onFailure { 
-      case ex: Exception =>
+    }.onComplete {
+      case Success(_) =>
+      case Failure(ex) =>
         log.error(ex, "Failed to bind to {}:{}!", host, port)
         system.terminate()
     }

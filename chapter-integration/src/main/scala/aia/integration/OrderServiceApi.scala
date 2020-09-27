@@ -42,12 +42,12 @@ trait OrderService {
     pathPrefix("orders" / IntNumber) { id =>
       onSuccess(processOrders.ask(OrderId(id))) {
         case result: TrackingOrder =>
-          complete(<statusResponse>
+          complete((<statusResponse>
             <id>{ result.id }</id>
             <status>{ result.status }</status>
-          </statusResponse>)
+          </statusResponse>))
         
-        case result: NoSuchOrder => 
+        case NoSuchOrder =>
           complete(StatusCodes.NotFound)
       }
     }

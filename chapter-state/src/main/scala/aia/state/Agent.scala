@@ -4,18 +4,16 @@ import akka.agent.Agent
 import akka.actor.ActorSystem
 import concurrent.Await
 import concurrent.duration._
-import akka.util.Timeout
-//import concurrent.ExecutionContext.Implicits.global
 
 
-case class BookStatistics(val nameBook: String, nrSold: Int)
-case class StateBookStatistics(val sequence: Long,
+case class BookStatistics(nameBook: String, nrSold: Int)
+case class StateBookStatistics(sequence: Long,
                             books: Map[String, BookStatistics])
 
 
 class BookStatisticsMgr(system: ActorSystem) {
   implicit val ex = system.dispatcher //todo: change chapter 2.2 =>2.3
-  val stateAgent = Agent(new StateBookStatistics(0, Map())) //todo: change chapter 2.2 =>2.3
+  val stateAgent = Agent(StateBookStatistics(0, Map())) //todo: change chapter 2.2 =>2.3
 
   def addBooksSold(book: String, nrSold: Int): Unit = {
     stateAgent send (oldState => {

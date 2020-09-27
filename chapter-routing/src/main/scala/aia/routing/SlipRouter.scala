@@ -96,7 +96,7 @@ class SlipRouter(endStep: ActorRef) extends Actor with RouteSlip {
       case CarOptions.CAR_COLOR_GRAY  => routeSlip += paintGray
       case CarOptions.NAVIGATION      => routeSlip += addNavigation
       case CarOptions.PARKING_SENSORS => routeSlip += addParkingSensor
-      case other                      => //do nothing
+      case _                          => //do nothing
     }
     routeSlip += endStep
     routeSlip
