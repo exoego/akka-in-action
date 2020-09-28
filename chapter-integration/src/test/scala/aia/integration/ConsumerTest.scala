@@ -13,7 +13,7 @@ import org.apache.activemq.camel.component.ActiveMQComponent
 import javax.jms.{ Session, DeliveryMode, Connection }
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.activemq.broker.BrokerRegistry
-import collection.JavaConversions._
+import collection.JavaConverters._
 
 class ConsumerTest extends TestKit(ActorSystem("ConsumerTest"))
   with WordSpecLike with BeforeAndAfterAll with MustMatchers
@@ -164,7 +164,7 @@ class ConsumerTest extends TestKit(ActorSystem("ConsumerTest"))
 
 
       val brokers = BrokerRegistry.getInstance().getBrokers
-      brokers.foreach { case (name, broker) => broker.stop() }
+      brokers.asScala.foreach { case (_, broker) => broker.stop() }
 
     }
     "pickup 2 xml files" in {

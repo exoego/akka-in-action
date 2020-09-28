@@ -126,9 +126,9 @@ class PerfRoutingTest
       val future2 = router.ask(GetRoutees)(1 second)
       val routeesMsg2 = Await.result(future2, 1.second).asInstanceOf[Routees]
       routeesMsg2.getRoutees.size must be (2)
-      import collection.JavaConversions._
-      for(routee <- routeesMsg2.getRoutees) {
-        routees.get(0).send(msg, endProbe.ref)
+      import collection.JavaConverters._
+      for(routee <- routeesMsg2.getRoutees.asScala) {
+        routee.send(msg, endProbe.ref)
       }
       val procMsg1 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg1)
@@ -343,7 +343,7 @@ class PerfRoutingTest
         None,
         None)
 
-      for (index <- 0 until 10) {
+      for (_ <- 0 until 10) {
         router ! msg
       }
       val processedMessages = endProbe.receiveN(10, 5 seconds).collect
@@ -375,17 +375,15 @@ class PerfRoutingTest
         None,
         None)
 
-      for (index <- 0 until 10) {
+      for (_ <- 0 until 10) {
         Thread.sleep(200)
         router ! msg
       }
       val processedMessages = endProbe.receiveN(10, 5 seconds).collect { case m: PerformanceRoutingMessage => m }
       processedMessages.size must be(10)
       val grouped = processedMessages.groupBy(_.processedBy)
-      val msgProcessedByActor1 = grouped.get(Some("250"))
-        .getOrElse(Seq())
-      val msgProcessedByActor2 = grouped.get(Some("500"))
-        .getOrElse(Seq())
+      val msgProcessedByActor1 = grouped.getOrElse(Some("250"), Seq())
+      val msgProcessedByActor2 = grouped.getOrElse(Some("500"), Seq())
       msgProcessedByActor1 must have size (7)
       msgProcessedByActor2 must have size (3)
 
@@ -412,7 +410,7 @@ class PerfRoutingTest
         None,
         None)
 
-      for (index <- 0 until 10) {
+      for (_ <- 0 until 10) {
         Thread.sleep(200)
         router ! msg
       }
@@ -448,7 +446,7 @@ class PerfRoutingTest
         None,
         None)
 
-      for (index <- 0 until 10) {
+      for (_ <- 0 until 10) {
         router ! msg
       }
       val processedMessages = endProbe.receiveN(10, 5 seconds).collect { case m: PerformanceRoutingMessage => m }
@@ -486,7 +484,7 @@ class PerfRoutingTest
         None,
         None)
 
-      for (index <- 0 until 10) {
+      for (_ <- 0 until 10) {
         routees.get(0).send(msg, endProbe.ref)
       }
       val processedMessages = endProbe.receiveN(10, 5 seconds).collect { case m: PerformanceRoutingMessage => m }

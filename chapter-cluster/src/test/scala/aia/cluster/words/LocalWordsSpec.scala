@@ -43,7 +43,7 @@ class LocalWordsSpec extends TestKit(ActorSystem("test"))
     // たくさん単語があるテキストで単語の出現回数を計算する
     "count many occurences of words in a text" in {
       val words = List("this is a test ", "this is a test", "this is", "this")
-      receptionist ! JobRequest("test3", (1 to 100).map(i=> words ++ words).flatten.toList)
+      receptionist ! JobRequest("test3", (1 to 100).map(_ => words ++ words).flatten.toList)
       expectMsg(JobSuccess("test3", Map("this" -> 800, "is"-> 600, "a" -> 400, "test" -> 400)))
       expectNoMsg
     }

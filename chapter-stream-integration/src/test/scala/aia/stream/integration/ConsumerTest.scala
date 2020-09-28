@@ -1,16 +1,13 @@
 package aia.stream.integration
 
-import java.io.{BufferedReader, File, InputStreamReader, PrintWriter}
-import java.net.Socket
+import java.io.File
 
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
 import akka.NotUsed
 import akka.stream.ActorMaterializer
 import akka.stream.alpakka.amqp.{AmqpConnectionUri, AmqpSinkSettings, NamedQueueSourceSettings}
-import akka.stream.scaladsl.{Flow, Framing, Keep, RunnableGraph, Sink, Source, Tcp}
-import akka.stream.testkit.scaladsl.TestSink
-import akka.util.ByteString
+import akka.stream.scaladsl.{Keep, RunnableGraph, Sink, Source}
 import io.arivera.oss.embedded.rabbitmq.{EmbeddedRabbitMq, EmbeddedRabbitMqConfig, PredefinedVersion}
 import com.rabbitmq.client.{AMQP, ConnectionFactory}
 import org.apache.commons.io.FileUtils
@@ -99,8 +96,6 @@ class ConsumerTest extends TestKit(ActorSystem("ConsumerTest"))
 
   "The Producer" must {
     "send msg using AMQP" in {
-      implicit val executionContext = system.dispatcher
-
       val queueName = "xmlTest"
 
       val amqpSinkSettings =

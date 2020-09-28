@@ -112,7 +112,7 @@ class LogStreamProcessorSpec extends TestKit(ActorSystem("test-filter"))
       val results = convertToJsonBytes(errors(parseLogEvents(source)))
         .toMat(FileIO.toPath(pathEvents, Set(CREATE, WRITE, APPEND)))(Keep.right)
         .run
-        .flatMap { r =>
+        .flatMap { _ =>
           parseJsonEvents(jsonText(pathEvents))
           .runWith(Sink.seq[Event])
         }
@@ -131,8 +131,6 @@ class LogStreamProcessorSpec extends TestKit(ActorSystem("test-filter"))
 
     "be able to rollup events" in {
       implicit val materializer = ActorMaterializer()
-      import system.dispatcher
-      import LogStreamProcessor._
 
       val source = Source[Event](Vector(mkEvent, mkEvent, mkEvent, mkEvent))
        
@@ -146,8 +144,6 @@ class LogStreamProcessorSpec extends TestKit(ActorSystem("test-filter"))
 
     "be able to use implicit classes to extend DSL" in {
       implicit val materializer = ActorMaterializer()
-      import system.dispatcher
-      import LogStreamProcessor._
 
       val source = Source[Event](Vector(mkEvent, mkEvent, mkEvent, mkEvent))
        
