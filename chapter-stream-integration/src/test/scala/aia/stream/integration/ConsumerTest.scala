@@ -6,7 +6,7 @@ import akka.actor.ActorSystem
 import akka.testkit.TestKit
 import akka.NotUsed
 import akka.stream.ActorMaterializer
-import akka.stream.alpakka.amqp.{AmqpConnectionUri, AmqpSinkSettings, NamedQueueSourceSettings}
+import akka.stream.alpakka.amqp.{AmqpUriConnectionProvider, AmqpWriteSettings, NamedQueueSourceSettings}
 import akka.stream.scaladsl.{Keep, RunnableGraph, Sink, Source}
 import io.arivera.oss.embedded.rabbitmq.{EmbeddedRabbitMq, EmbeddedRabbitMqConfig, PredefinedVersion}
 import com.rabbitmq.client.{AMQP, ConnectionFactory}
@@ -72,7 +72,7 @@ class ConsumerTest extends TestKit(ActorSystem("ConsumerTest"))
       val queueName = "xmlTest"
       val amqpSourceSettings =
         NamedQueueSourceSettings(
-          AmqpConnectionUri("amqp://localhost:8899"),
+          AmqpUriConnectionProvider("amqp://localhost:8899"),
           queueName
         )
 
@@ -99,10 +99,9 @@ class ConsumerTest extends TestKit(ActorSystem("ConsumerTest"))
       val queueName = "xmlTest"
 
       val amqpSinkSettings =
-        AmqpSinkSettings(
-          AmqpConnectionUri("amqp://localhost:8899"),
-          routingKey = Some(queueName)
-        )
+        AmqpWriteSettings(
+          AmqpUriConnectionProvider("amqp://localhost:8899"),
+        ).withRoutingKey(queueName)
 
       val msg = new Order("me", "Akka in Action", 10)
 
@@ -111,8 +110,8 @@ class ConsumerTest extends TestKit(ActorSystem("ConsumerTest"))
           .to(AmqpXmlOrderSink(amqpSinkSettings))
 
       val amqpSourceSettings =
-        NamedQueueSourceSettings(
-          AmqpConnectionUri("amqp://localhost:8899"),
+        NamedQueueSourceSettings.create(
+          AmqpUriConnectionProvider("amqp://localhost:8899"),
           queueName
         )
 
