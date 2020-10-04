@@ -44,8 +44,8 @@ class PerfRoutingTest
 
       val procMsg = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       creator ! PreferredSize(4)
       Thread.sleep(1000)
@@ -56,8 +56,8 @@ class PerfRoutingTest
       router ! msg
       val procMsg2 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg2)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       router ! Broadcast(PoisonPill)
       Thread.sleep(1000)
@@ -65,8 +65,8 @@ class PerfRoutingTest
       router ! msg
       val procMsg3 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg3)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       system.stop(router)
       system.stop(creator)
@@ -92,7 +92,7 @@ class PerfRoutingTest
       termProbe.watch(router)
       routee.send(PoisonPill, endProbe.ref)
       termProbe.expectTerminated(routee.ref)
-      termProbe.expectNoMsg
+      termProbe.expectNoMessage
       termProbe.unwatch(router)
       system.stop(creator)
     }
@@ -120,7 +120,7 @@ class PerfRoutingTest
 
       termProbe.watch(router)
       //// router isn't terminated due to the use of ActorSelectionRoutee
-      termProbe.expectNoMsg
+      termProbe.expectNoMessage
       termProbe.unwatch(router)
 
       val future2 = router.ask(GetRoutees)(1 second)
@@ -159,8 +159,8 @@ class PerfRoutingTest
 
       val procMsg = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       creator ! PreferredSize(4)
       Thread.sleep(1000)
@@ -171,8 +171,8 @@ class PerfRoutingTest
       router ! msg
       val procMsg2 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg2)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       router ! Broadcast(PoisonPill)
 
@@ -210,8 +210,8 @@ class PerfRoutingTest
 
       val procMsg = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       creator ! "KillFirst"
       Thread.sleep(100)
@@ -220,8 +220,8 @@ class PerfRoutingTest
 
       val procMsg2 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg2)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       creator ! "KillFirst"
       Thread.sleep(100)
@@ -230,8 +230,8 @@ class PerfRoutingTest
 
       val procMsg3 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg3)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       system.stop(router)
       system.stop(creator)
@@ -250,9 +250,9 @@ class PerfRoutingTest
       )
       val router = system.actorOf(RoundRobinGroup(paths).props(), "groupRouter-test6")
 
-      deadProbe.expectNoMsg()
+      deadProbe.expectNoMessage()
       router ! Broadcast(PoisonPill)
-      deadProbe.expectNoMsg()
+      deadProbe.expectNoMessage()
 
       val msg = PerformanceRoutingMessage(
         ImageProcessing.createPhotoString(new Date(), 60, "123xyz"),
@@ -262,15 +262,15 @@ class PerfRoutingTest
 
       val procMsg2 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg2)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       router ! msg
 
       val procMsg3 = endProbe.expectMsgType[PerformanceRoutingMessage](1 second)
       println("Received: "+ procMsg3)
-      endProbe.expectNoMsg()
-      deadProbe.expectNoMsg()
+      endProbe.expectNoMessage()
+      deadProbe.expectNoMessage()
 
       system.stop(router)
       system.stop(creator)

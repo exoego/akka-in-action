@@ -28,20 +28,20 @@ class StateRoutingTest
       router ! msg
 
       cleanupProbe.expectMsg(msg)
-      normalFlowProbe.expectNoMsg(1 second)
+      normalFlowProbe.expectNoMessage(1 second)
 
       router ! RouteStateOn
 
       router ! msg
 
-      cleanupProbe.expectNoMsg(1 second)
+      cleanupProbe.expectNoMessage(1 second)
       normalFlowProbe.expectMsg(msg)
 
       router ! RouteStateOff
       router ! msg
 
       cleanupProbe.expectMsg(msg)
-      normalFlowProbe.expectNoMsg(1 second)
+      normalFlowProbe.expectNoMessage(1 second)
 
 
     }
@@ -58,20 +58,20 @@ class StateRoutingTest
       router ! msg
 
       cleanupProbe.expectMsg(msg)
-      normalFlowProbe.expectNoMsg(1 second)
+      normalFlowProbe.expectNoMessage(1 second)
 
       router ! RouteStateOn
 
       router ! msg
 
-      cleanupProbe.expectNoMsg(1 second)
+      cleanupProbe.expectNoMessage(1 second)
       normalFlowProbe.expectMsg(msg)
 
       router ! RouteStateOff
       router ! msg
 
       cleanupProbe.expectMsg(msg)
-      normalFlowProbe.expectNoMsg(1 second)
+      normalFlowProbe.expectNoMessage(1 second)
 
 
     }
