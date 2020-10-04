@@ -6,7 +6,7 @@ organization := "manning"
 
 libraryDependencies ++= {
   val akkaVersion = "2.5.31"
-  val alpakkaVersion = "2.0.2"
+  val alpakkaVersion = "0.20"
   val akkaHttpVersion = "10.2.1"
   Seq(
     "org.scala-lang.modules"  %% "scala-xml" 				                 % "1.3.0",
