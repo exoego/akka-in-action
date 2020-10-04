@@ -3,7 +3,7 @@ package aia.stream.integration
 import java.nio.file.Path
 
 import akka.NotUsed
-import akka.stream.alpakka.amqp.{AmqpSinkSettings, AmqpSourceSettings}
+import akka.stream.alpakka.amqp.{AmqpWriteSettings, AmqpSourceSettings}
 import akka.stream.alpakka.amqp.scaladsl.{AmqpSink, AmqpSource}
 import akka.stream.alpakka.file.DirectoryChange
 import akka.stream.alpakka.file.scaladsl.DirectoryChangesSource
@@ -46,7 +46,7 @@ object Orders {
   }
 
   object AmqpXmlOrderSink {
-    def apply(amqpSinkSettings: AmqpSinkSettings): Sink[Order, NotUsed] =
+    def apply(amqpSinkSettings: AmqpWriteSettings): Sink[Order, NotUsed] =
       Flow[Order]
         .map { order =>
           <order>

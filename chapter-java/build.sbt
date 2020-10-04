@@ -2,10 +2,10 @@ name := "goticks-java"
 
 version := "1.0"
 
-javacOptions ++= Seq("-encoding", "UTF-8")
+javacOptions ++= Seq("-encoding", "UTF-8", "-Xlint:unchecked")
 
 libraryDependencies ++= {
-  val akkaVersion = "2.5.4"
+  val akkaVersion = "2.5.23"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,

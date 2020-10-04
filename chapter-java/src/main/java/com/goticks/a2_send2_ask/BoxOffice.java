@@ -100,7 +100,7 @@ public class BoxOffice extends AbstractActor {
                                 log.info("result1: {}", oc.getMessage());
                             })
                             .exceptionally(ex -> {
-                                UnitPFBuilder builder = UnitMatch
+                                UnitPFBuilder<Object> builder = UnitMatch
                                         .match(AskTimeoutException.class, e -> log.warning(e.getMessage()))
                                         .match(Throwable.class, t -> log.error(t, "予期せぬ例外が発生しました:"));
                                 UnitMatch.create(builder).match(ex.getCause());
@@ -118,7 +118,7 @@ public class BoxOffice extends AbstractActor {
                         Result r = (Result) msg;
                         log.info("result: {}", r.getResult());
                     }).exceptionally(ex -> {
-                        UnitPFBuilder builder = UnitMatch
+                        UnitPFBuilder<Object> builder = UnitMatch
                                 .match(AskTimeoutException.class, e -> log.warning(e.getMessage()))
                                 .match(Throwable.class, t -> log.error(t, "予期せぬ例外が発生しました:"));
                         UnitMatch.create(builder).match(ex.getCause());

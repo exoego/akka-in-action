@@ -9,8 +9,8 @@ parallelExecution in Test := false
 fork := true
 
 libraryDependencies ++= {
-  val akkaVersion = "2.5.4"
-  val akkaHttpVersion = "10.0.10"
+  val akkaVersion = "2.5.31"
+  val akkaHttpVersion = "10.2.1"
   Seq(
     "com.typesafe.akka"         %%  "akka-actor"                          % akkaVersion,
     "com.typesafe.akka"         %%  "akka-stream"                         % akkaVersion,
@@ -33,7 +33,7 @@ libraryDependencies ++= {
 
     "commons-io"                %   "commons-io"                          % "2.4",
 
-    "org.scalatest"             %%  "scalatest"                           % "3.0.0"       % "test",
+    "org.scalatest"             %%  "scalatest"                           % "3.0.8"       % "test",
 
     "com.typesafe.akka"         %%  "akka-slf4j"                          % akkaVersion,
     "ch.qos.logback"            %   "logback-classic"                     % "1.1.2"
