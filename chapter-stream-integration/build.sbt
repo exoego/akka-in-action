@@ -5,11 +5,11 @@ version := "1.0"
 organization := "manning"
 
 libraryDependencies ++= {
-  val akkaVersion = "2.5.4"
-  val alpakkaVersion = "0.14"
-  val akkaHttpVersion = "10.0.10"
+  val akkaVersion = "2.5.31"
+  val alpakkaVersion = "2.0.2"
+  val akkaHttpVersion = "10.2.1"
   Seq(
-    "org.scala-lang.modules"  %% "scala-xml" 				                 % "1.0.6",
+    "org.scala-lang.modules"  %% "scala-xml" 				                 % "1.3.0",
     "com.typesafe.akka"       %% "akka-actor"                        % akkaVersion,
     "com.typesafe.akka"       %% "akka-slf4j"                        % akkaVersion,
     "com.typesafe.akka"       %% "akka-http"                         % akkaHttpVersion,
@@ -24,7 +24,7 @@ libraryDependencies ++= {
     "com.typesafe.akka"       %% "akka-http-testkit"                 % akkaHttpVersion % "test",
     "com.typesafe.akka"       %% "akka-stream-testkit"               % akkaVersion     % "test",
     "com.typesafe.akka"       %% "akka-testkit"                      % akkaVersion     % "test",
-    "org.scalatest"           %% "scalatest"                         % "3.0.0"         % "test"
+    "org.scalatest"           %% "scalatest"                         % "3.0.8"         % "test"
   )
 }
 
