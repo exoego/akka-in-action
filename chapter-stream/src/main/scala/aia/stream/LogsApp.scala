@@ -40,7 +40,7 @@ object LogsApp extends App {
   val api = new LogsApi(logsDir, maxLine).routes
  
   val bindingFuture: Future[ServerBinding] =
-    Http().bindAndHandle(api, host, port)
+    Http().newServerAt(host, port).bindFlow(api)
  
   val log =  Logging(system.eventStream, "logs")
   bindingFuture.map { serverBinding =>

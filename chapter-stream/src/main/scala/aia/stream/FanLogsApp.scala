@@ -41,7 +41,7 @@ object FanLogsApp extends App {
   val api = new FanLogsApi(logsDir, maxLine, maxJsObject).routes
  
   val bindingFuture: Future[ServerBinding] =
-    Http().bindAndHandle(api, host, port)
+    Http().newServerAt(host, port).bindFlow(api)
  
   val log =  Logging(system.eventStream, "fan-logs")
   bindingFuture.map { serverBinding =>

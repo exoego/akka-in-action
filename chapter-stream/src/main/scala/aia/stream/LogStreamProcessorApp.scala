@@ -52,7 +52,7 @@ object LogStreamProcessorApp extends App {
   val api = new LogStreamProcessorApi(logsDir, notificationsDir, metricsDir, maxLine, maxJsObject).routes
  
   val bindingFuture: Future[ServerBinding] =
-    Http().bindAndHandle(api, host, port)
+    Http().newServerAt(host, port).bindFlow(api)
  
   val log =  Logging(system.eventStream, "processor")
   bindingFuture.map { serverBinding =>

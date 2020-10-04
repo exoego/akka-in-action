@@ -31,7 +31,7 @@ object Main extends App
 
   implicit val materializer = ActorMaterializer()
   val bindingFuture: Future[ServerBinding] =
-    Http().bindAndHandle(api, host, port) // HTTPサーバーの起動
+    Http().newServerAt(host, port).bindFlow(api) // HTTPサーバーの起動
 
   val log =  Logging(system.eventStream, "go-ticks")
   bindingFuture.map { serverBinding =>
