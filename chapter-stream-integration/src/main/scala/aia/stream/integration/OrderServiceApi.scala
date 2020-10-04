@@ -42,7 +42,7 @@ trait OrderService {
             </statusResponse>
           )
         
-        case NoSuchOrder =>
+        case _: NoSuchOrder =>
           complete(StatusCodes.NotFound)
       }
     }

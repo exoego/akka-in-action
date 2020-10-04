@@ -27,7 +27,7 @@ class AgentTest extends TestKit(ActorSystem("AgentTest"))
       }
       println("1: " + agent())
       atomic {
-        txn ⇒
+        _ =>
           val value = agent.get
           println("2: " + agent())
           Thread.sleep(5000)
@@ -45,7 +45,7 @@ class AgentTest extends TestKit(ActorSystem("AgentTest"))
       }
       println("1: " + agent())
       atomic {
-        txn ⇒
+        _ =>
           println("2: " + agent())
           Thread.sleep(5000)
           agent.send((oldState) => oldState.copy(sequence = oldState.sequence + 1))

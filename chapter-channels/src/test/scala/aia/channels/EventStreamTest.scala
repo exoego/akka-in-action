@@ -6,7 +6,7 @@ import org.scalatest.{WordSpecLike, BeforeAndAfterAll, MustMatchers}
 import java.util.Date
 import scala.concurrent.duration._
 
-class CancelOrder(time: Date,
+class CancelOrder(val time: Date,
                   override val customerId: String,
                   override val productId: String,
                   override val number: Int)

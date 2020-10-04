@@ -1,10 +1,7 @@
 package aia.next
 
-import scala.concurrent.duration._
-
 import akka.actor._
 import akka.testkit._
-import org.scalatest._
 
 class BasketSpec extends PersistenceSpec(ActorSystem("test"))
     with PersistenceCleanup {
@@ -27,7 +24,6 @@ class BasketSpec extends PersistenceSpec(ActorSystem("test"))
 
     "return the items in a typesafe way" in {
       import akka.typed._
-      import akka.typed.scaladsl.Actor._
       import akka.typed.scaladsl.AskPattern._
       import scala.concurrent.Future
       import scala.concurrent.duration._
