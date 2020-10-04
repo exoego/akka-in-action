@@ -32,10 +32,10 @@ class PipeAndFilterTest
       endProbe.expectMsg(msg)
 
       licenseFilterRef ! new Photo("", 60)
-      endProbe.expectNoMsg(timeout)
+      endProbe.expectNoMessage(timeout)
 
       licenseFilterRef ! new Photo("123xyz", 49)
-      endProbe.expectNoMsg(timeout)
+      endProbe.expectNoMessage(timeout)
     }
     "filter messages in configuration 2" in {
 
@@ -49,10 +49,10 @@ class PipeAndFilterTest
       endProbe.expectMsg(msg)
 
       speedFilterRef ! new Photo("", 60)
-      endProbe.expectNoMsg(timeout)
+      endProbe.expectNoMessage(timeout)
 
       speedFilterRef ! new Photo("123xyz", 49)
-      endProbe.expectNoMsg(timeout)
+      endProbe.expectNoMessage(timeout)
     }
   }
 }

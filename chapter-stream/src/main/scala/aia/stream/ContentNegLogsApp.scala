@@ -41,7 +41,7 @@ object ContentNegLogsApp extends App {
   val api = new ContentNegLogsApi(logsDir, maxLine, maxJsObject).routes
  
   val bindingFuture: Future[ServerBinding] =
-    Http().bindAndHandle(api, host, port)
+    Http().newServerAt(host, port).bindFlow(api)
  
   val log =  Logging(system.eventStream, "content-neg-logs")
   bindingFuture.map { serverBinding =>

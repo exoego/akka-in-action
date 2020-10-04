@@ -38,21 +38,21 @@ class LocalWordsSpec extends TestKit(ActorSystem("test"))
     "count the occurrence of words in a text" in {
       receptionist ! JobRequest("test2", List("this is a test ", "this is a test", "this is", "this"))
       expectMsg(JobSuccess("test2", Map("this" -> 4, "is"-> 3, "a" -> 2, "test" -> 2)))
-      expectNoMsg
+      expectNoMessage
     }
     // たくさん単語があるテキストで単語の出現回数を計算する
     "count many occurences of words in a text" in {
       val words = List("this is a test ", "this is a test", "this is", "this")
       receptionist ! JobRequest("test3", (1 to 100).map(_ => words ++ words).flatten.toList)
       expectMsg(JobSuccess("test3", Map("this" -> 800, "is"-> 600, "a" -> 400, "test" -> 400)))
-      expectNoMsg
+      expectNoMessage
     }
     // 失敗があったとしても、ジョブを継続する
     "continue to process a job with intermittent failures" in {
       // the failure is simulated by a job worker throwing an exception on finding the word FAIL in the text.
       receptionist ! JobRequest("test4", List("this", "is", "a", "test", "FAIL!"))
       expectMsg(JobSuccess("test4", Map("this" -> 1, "is"-> 1, "a" -> 1, "test" -> 1)))
-      expectNoMsg
+      expectNoMessage
     }
   }
 }

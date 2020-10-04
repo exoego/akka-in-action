@@ -8,7 +8,6 @@ import akka.event.Logging
 import akka.util.Timeout
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.stream.ActorMaterializer
 import aia.persistence._
 
 import scala.util.{Failure, Success}
@@ -24,9 +23,8 @@ trait ShoppersServiceSupport extends RequestTimeout {
 
     val api = new ShoppersService(shoppers, system, requestTimeout(config)).routes // the RestApi provides a Route
  
-    implicit val materializer = ActorMaterializer()
     val bindingFuture: Future[ServerBinding] =
-      Http().bindAndHandle(api, host, port)
+      Http().newServerAt(host, port).bindFlow(api)
    
     val log =  Logging(system.eventStream, "shoppers")
     bindingFuture.map { serverBinding =>

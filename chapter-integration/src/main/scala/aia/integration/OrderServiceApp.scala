@@ -30,7 +30,7 @@ object OrderServiceApp extends App
  
   implicit val materializer = ActorMaterializer()
   val bindingFuture: Future[ServerBinding] =
-    Http().bindAndHandle(api, host, port)
+    Http().newServerAt(host, port).bindFlow(api)
  
   val log =  Logging(system.eventStream, "order-service")
   bindingFuture.map { serverBinding =>

@@ -76,7 +76,7 @@ class ReliableProxySample
 
         echo ! "DirectMessage"
         proxy ! "ProxyMessage"
-        expectNoMsg(3 seconds)
+        expectNoMessage(3 seconds)
 
         Await.ready(
           testConductor.passThrough( client, server, Direction.Both),

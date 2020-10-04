@@ -31,7 +31,7 @@ class FilteringActorTest extends TestKit(ActorSystem("testsystem"))
     }
 
 
-    "filter out particular messages using expectNoMsg" in {
+    "filter out particular messages using expectNoMessage" in {
       import FilteringActor._
       val props = FilteringActor.props(testActor, 5)
       val filter = system.actorOf(props, "filter-2")
@@ -40,17 +40,17 @@ class FilteringActorTest extends TestKit(ActorSystem("testsystem"))
       expectMsg(Event(1))
       expectMsg(Event(2))
       filter ! Event(1)
-      expectNoMsg
+      expectNoMessage
       filter ! Event(3)
       expectMsg(Event(3))
       filter ! Event(1)
-      expectNoMsg
+      expectNoMessage
       filter ! Event(4)
       filter ! Event(5)
       filter ! Event(5)
       expectMsg(Event(4))
       expectMsg(Event(5))
-      expectNoMsg()
+      expectNoMessage()
     }
 
   }

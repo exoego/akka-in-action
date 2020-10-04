@@ -30,14 +30,14 @@ class MsgRoutingTest
       val msg = new Photo(license = "123xyz", speed = 60)
       router ! msg
 
-      cleanupProbe.expectNoMsg(1 second)
+      cleanupProbe.expectNoMessage(1 second)
       normalFlowProbe.expectMsg(msg)
 
       val msg2 = new Photo(license = "123xyz", speed = 45)
       router ! msg2
 
       cleanupProbe.expectMsg(msg2)
-      normalFlowProbe.expectNoMsg(1 second)
+      normalFlowProbe.expectNoMessage(1 second)
 
 
     }

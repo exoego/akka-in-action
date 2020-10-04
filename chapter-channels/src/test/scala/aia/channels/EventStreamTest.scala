@@ -66,7 +66,7 @@ class EventStreamTest extends TestKit(ActorSystem("EventStreamTest"))
         classOf[CancelOrder])
       val msg = new Order("me", "Akka in Action", 3)
       system.eventStream.publish(msg)
-      giftModule.expectNoMsg(3 seconds)
+      giftModule.expectNoMessage(3 seconds)
 
     }
     "unscribe messages" in {
@@ -91,7 +91,7 @@ class EventStreamTest extends TestKit(ActorSystem("EventStreamTest"))
 
       system.eventStream.publish(msg)
       DeliverOrder.expectMsg(msg)
-      giftModule.expectNoMsg(3 seconds)
+      giftModule.expectNoMessage(3 seconds)
 
     }
   }
@@ -122,11 +122,11 @@ class EventStreamTest extends TestKit(ActorSystem("EventStreamTest"))
       val msg = new Order("me", "Akka in Action", 1)
       bus.publish(msg)
       singleBooks.expectMsg(msg)
-      multiBooks.expectNoMsg(3 seconds)
+      multiBooks.expectNoMessage(3 seconds)
 
       val msg2 = new Order("me", "Akka in Action", 3)
       bus.publish(msg2)
-      singleBooks.expectNoMsg(3 seconds)
+      singleBooks.expectNoMessage(3 seconds)
       multiBooks.expectMsg(msg2)
 
     }
