@@ -27,7 +27,7 @@ object EventUnmarshaller extends EventMarshalling {
             Future.successful(LogJson.jsonInFlow(maxJsonObject))
           case _ =>
             Future.failed(
-              new UnsupportedContentTypeException(supported)
+              UnsupportedContentTypeException(supported)
             )
         }
         future.map(flow => entity.dataBytes.via(flow))(ec)
