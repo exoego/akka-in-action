@@ -13,7 +13,7 @@ trait ReceptionistRouterLookup { this: Actor =>
         totalInstances = 100,
         routeesPaths = List("/user/receptionist"),
         allowLocalRoutees = true,
-        useRole = Some("master")
+        useRoles = Set("master")
       )
     ).props(),
     name = "receptionist-router")
