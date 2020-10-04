@@ -10,7 +10,8 @@ fork := true
 
 libraryDependencies ++= {
   // 2.5.8 is final for akka-typed
-  val akkaVersion = "2.5.8"
+  // 2.5.7 and 2.5.8 causes java.lang.ClassNotFoundException: akka.remote.serialization.WrappedPayloadSupport
+  val akkaVersion = "2.5.6"
   Seq(
     "com.typesafe.akka"         %%  "akka-actor"              % akkaVersion,
     "com.typesafe.akka"         %%  "akka-typed"              % akkaVersion,
